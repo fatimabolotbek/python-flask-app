@@ -24,6 +24,10 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
+COPY . .
+
+RUN python -m pip install -r requirements.txt
+
 RUN adduser \
     --disabled-password \
     --home "/nonexistent" \
@@ -34,11 +38,6 @@ RUN adduser \
 
 USER pythonuser
 
-COPY . .
-
-RUN python -m pip install -r requirements.txt
-
 EXPOSE 8000
 
-CMD [ "python3", "-m", "uvicorn", "app:app", "host=0.0.0.0", "port=8000" ]
-#test
+CMD [ "python3", "-m", "uvicorn", "app:app", "--host=0.0.0.0", "--port=8000" ]
